@@ -1,10 +1,43 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+</head>
 <body>
 
 <form action="" method="post">
 
   <input name="search" type="search" autofocus><input type="submit" name="button">
 
-</form>
-
 <table>
-  <tr><td><b>First Name</td><td></td><td><b>Last Name</td></tr>
+  <tr><td>Last Name</td></tr>
+      </form>
+</body>
+
+</html>
+<?php
+
+
+if (isset($_POST['submit'])) {
+    $searchValue = $_POST['search'];
+    $con = new mysqli("localhost", "root", "", "crud");
+    if ($con->connect_error) {
+        echo "connection Failed: " . $con->connect_error;
+    } else {
+        $sql = "SELECT * FROM users WHERE fname OR lname LIKE '%$searchValue%'";
+
+        $result = $con->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            echo $row['fname'] . "<br>";
+            echo $row['lname'] . "<br>";
+        }
+
+      
+    }   
+}
+
+
+
+?>
